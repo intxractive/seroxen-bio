@@ -3,116 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Goober's Bio</title>
+  <title>Seroxen Bio Service</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #1a1a1a;
-      color: white;
-      padding: 20px;
       text-align: center;
-      margin: 0;
-      overflow: hidden;
-    }
-
-    .profile-container {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6); /* Transparent background */
-      border-radius: 15px;
-      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+      background-color: #2c3e50;
+      color: white;
+      padding: 50px;
     }
 
     h1 {
+      font-size: 3rem;
       color: #8e44ad;
     }
 
-    .profile-image {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      border: 5px solid #8e44ad;
-    }
-
-    .bio-content {
-      font-size: 1.2rem;
-      line-height: 1.5;
-    }
-
-    .audio {
+    .profile-links {
       margin-top: 20px;
+      font-size: 1.2rem;
     }
 
-    .footer {
-      position: fixed;
-      bottom: 10px;
-      font-size: 0.9rem;
-      color: #ddd;
+    .profile-links a {
+      color: #3498db;
+      text-decoration: none;
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin: 10px;
+      display: inline-block;
+      transition: background-color 0.3s;
     }
 
-    /* Snow or rain effect */
-    .snowflakes {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .snowflakes div {
-      position: absolute;
-      background: white;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      animation: snow 10s linear infinite;
-    }
-
-    @keyframes snow {
-      0% { transform: translateY(-10px); }
-      100% { transform: translateY(100vh); }
+    .profile-links a:hover {
+      background-color: rgba(255, 255, 255, 0.3);
     }
   </style>
 </head>
 <body>
+  <h1>Welcome to Seroxen Bio Service</h1>
+  <p>Select a user profile to view:</p>
 
-  <!-- Snowflakes Effect -->
-  <div class="snowflakes" id="snowflakes"></div>
-
-  <!-- Profile Container -->
-  <div class="profile-container">
-    <img class="profile-image" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.F4r00USwUXpyE5JU7sXa4AAAAA%26pid%3DApi%26h%3D160&f=1&ipt=afb3950a1f5604c315ab2631ffe318425c0e5031a3357f8f9a0c8bcd9220a57a&ipo=images" alt="Goober's Profile Picture">
-    <h1>Goober's Bio</h1>
-    <p class="bio-content">
-      This is Goober's bio. A short intro about Goober.<br><br>
-      Here you can add your description, hobbies, etc.
-    </p>
-
-    <!-- Audio Section -->
-    <div class="audio">
-      <audio controls>
-        <source src="your-audio-file.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
+  <div class="profile-links">
+    <a href="/goober">Goober's Bio</a>
+    <a href="/funut">Funut's Bio</a>
+    <a href="/andrew">Andrew's Bio</a>
+    <a href="/drycheetah">DryCheetah's Bio</a>
+    <a href="/eno">Eno's Bio</a>
   </div>
-
-  <footer class="footer">&copy; 2025 seroxen.us</footer>
-
-  <script>
-    // Create snowflakes effect (you can adjust the amount of snow)
-    for (let i = 0; i < 100; i++) {
-      const snowflake = document.createElement('div');
-      snowflake.style.left = `${Math.random() * 100}vw`;
-      snowflake.style.animationDuration = `${Math.random() * 3 + 5}s`;
-      snowflake.style.animationDelay = `${Math.random() * 5}s`;
-      document.getElementById('snowflakes').appendChild(snowflake);
-    }
-  </script>
-
 </body>
 </html>
