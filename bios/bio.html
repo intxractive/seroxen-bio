@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Bio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="username"></h1>
+    <p id="bio"></p>
+    <img id="background" src="" alt="Background Image">
+    <audio id="audio" controls></audio>
+
+    <script>
+        // Get username from the URL
+        const username = window.location.pathname.split('/')[1];
+
+        fetch(`https://raw.githubusercontent.com/YOUR_USERNAME/seroxen-bio/main/bios/${username}.json`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('username').textContent = data.username;
+                document.getElementById('bio').textContent = data.bio;
+                document.getElementById('background').src = data.background_image;
+                document.getElementById('audio').src = data.audio || '';
+            })
+            .catch(error => {
+                document.body.innerHTML = `<h2>User not found</h2>`;
+            });
+    </script>
+</body>
+</html>
 
