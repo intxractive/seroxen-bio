@@ -1,1 +1,50 @@
+name: Create User Bio
+
+on:
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: 'User event'
+        required: true
+        default: 'user_signup'
+      client_payload:
+        description: 'User data'
+        required: true
+        type: object
+
+jobs:
+  create-bio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Create User Bio File
+        run: |
+          # Get user data from the client payload
+          USERNAME=$(echo "${{ github.event.inputs.client_payload.username }}" | jq -r '.username')
+          BIO=$(echo "${{ github.event.inputs.client_payload.bio }}" | jq -r '.bio')
+          BACKGROUND_IMAGE=$(echo "${{ github.event.inputs.client_payload.background_image }}" | jq -r '.background_image')
+          AUDIO=$(echo "${{ github.event.inputs.client_payload.audio }}" | jq -r '.audio')
+
+          # Create JSON data for the user
+          BIO_DATA=$(jq -n \
+            --arg username "$USERNAME" \
+            --arg bio "$BIO" \
+            --arg background_image "$BACKGROUND_IMAGE" \
+            --arg audio "$AUDIO" \
+            '{username: $username, bio: $bio, background_image: $background_image, audio: $audio}')
+
+          # Define the file path for the user's bio
+          FILE_PATH="bios/$USERNAME.json"
+
+          # Create the bio file in the GitHub repository
+          echo "$BIO_DATA" > bios/$USERNAME.json
+
+          # Commit the new file to the repository
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add bios/$USERNAME.json
+          git commit -m "Create bio for $USERNAME"
+          git push
 
