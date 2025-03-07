@@ -3,31 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign-Up | Seroxen Bio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <title>Sign Up</title>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Seroxen Bio</h1>
-      <p>Your personal bio hosting platform</p>
-    </header>
+  <h2>Sign Up</h2>
+  <form id="signup-form">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required><br>
 
-    <section class="signup">
-      <h2>Create Your Account</h2>
-      <form id="signup-form">
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter your username" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required><br>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
+    <button type="submit">Sign Up</button>
+  </form>
 
-        <button type="submit">Sign Up</button>
-      </form>
-    </section>
-  </div>
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-  <script src="script.js"></script>
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.text();
+      alert(data);
+    });
+  </script>
 </body>
 </html>
