@@ -3,31 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Bio Page</title>
+    <title>User Bio Sign Up</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="bio-container">
-        <h1>Welcome to Your Bio Page!</h1>
-        <p>Your information will appear here.</p>
-    </div>
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const username = urlParams.get('username');  // Capture the username from URL
+    <h1>Sign Up for Your Bio Page</h1>
+    <form id="signup-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="bio">Bio:</label><br>
+        <textarea id="bio" name="bio" required></textarea><br><br>
 
-        // Fetch bio data from GitHub repository
-        fetch(`https://raw.githubusercontent.com/<your-username>/seroxen-bio/main/bios/${username}.json`)
-            .then(response => response.json())
-            .then(data => {
-                document.querySelector('h1').innerText = `Welcome ${data.username}`;
-                document.querySelector('p').innerText = data.bio;
-                document.body.style.backgroundImage = `url(${data.background_image})`;  // Set background
+        <label for="background_image">Background Image URL:</label><br>
+        <input type="url" id="background_image" name="background_image"><br><br>
+
+        <label for="audio">Audio URL (Optional):</label><br>
+        <input type="url" id="audio" name="audio"><br><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('signup-form');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            // Send data to GitHub Action (via an API or direct trigger)
+            fetch('https://api.github.com/repos/seroxen-bio/actions/workflows/signup.yml/dispatches', {
+                method: 'POST',
+                body: JSON.stringify({
+                    event_type: 'user_signup',
+                    client_payload: data
+                }),
+                headers: {
+                    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(() => {
-                document.querySelector('h1').innerText = 'User not found';
-                document.querySelector('p').innerText = 'Please check the username.';
+            .then(response => response.json())
+            .then(result => {
+                alert('Signup successful! Your bio page will be available soon.');
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
             });
+        });
     </script>
 </body>
 </html>
-
