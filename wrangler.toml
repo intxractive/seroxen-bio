@@ -1,8 +1,0 @@
-name = "seroxen-bio"
-main = "src/index.js"  # Path to your main Worker script
-compatibility_date = "2025-03-07"
-
-[[env]]
-  name = "prod"
-  binding = { name = "BIO_STORAGE", namespace = "BIO_STORAGE" }
-  routes = ["seroxen.us/*"]
