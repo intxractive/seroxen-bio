@@ -1,0 +1,8 @@
+name = "seroxen-bio"
+main = "src/index.js"  # Path to your main Worker script (adjust if needed)
+compatibility_date = "2025-03-07"
+
+[[env]]
+  name = "prod"
+  binding = {name = "BIO_STORAGE", namespace = "BIO_STORAGE"}  # Your KV namespace binding
+  routes = ["seroxen.us/*"]
