@@ -3,38 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
+  <title>Goober's Bio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .profile-container {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6); /* Transparent background */
+      border-radius: 15px;
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      color: #8e44ad;
+    }
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 5px solid #8e44ad;
+    }
+
+    .bio-content {
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .audio {
+      margin-top: 20px;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    /* Snow or rain effect */
+    .snowflakes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .snowflakes div {
+      position: absolute;
+      background: white;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: snow 10s linear infinite;
+    }
+
+    @keyframes snow {
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(100vh); }
+    }
+  </style>
 </head>
 <body>
-  <h2>Sign Up</h2>
-  <form id="signup-form">
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" required><br>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required><br>
+  <!-- Snowflakes Effect -->
+  <div class="snowflakes" id="snowflakes"></div>
 
-    <button type="submit">Sign Up</button>
-  </form>
+  <!-- Profile Container -->
+  <div class="profile-container">
+    <img class="profile-image" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.F4r00USwUXpyE5JU7sXa4AAAAA%26pid%3DApi%26h%3D160&f=1&ipt=afb3950a1f5604c315ab2631ffe318425c0e5031a3357f8f9a0c8bcd9220a57a&ipo=images" alt="Goober's Profile Picture">
+    <h1>Goober's Bio</h1>
+    <p class="bio-content">
+      This is Goober's bio. A short intro about Goober.<br><br>
+      Here you can add your description, hobbies, etc.
+    </p>
+
+    <!-- Audio Section -->
+    <div class="audio">
+      <audio controls>
+        <source src="your-audio-file.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; 2025 seroxen.us</footer>
 
   <script>
-    document.getElementById('signup-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      const response = await fetch('/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password })
-      });
-
-      const data = await response.text();
-      alert(data);
-    });
+    // Create snowflakes effect (you can adjust the amount of snow)
+    for (let i = 0; i < 100; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${Math.random() * 3 + 5}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      document.getElementById('snowflakes').appendChild(snowflake);
+    }
   </script>
+
 </body>
 </html>
