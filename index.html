@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Bio Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="bio-container">
+        <h1>Welcome to Your Bio Page!</h1>
+        <p>Your information will appear here.</p>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');  // Capture the username from URL
+
+        // Fetch bio data from GitHub repository
+        fetch(`https://raw.githubusercontent.com/<your-username>/seroxen-bio/main/bios/${username}.json`)
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('h1').innerText = `Welcome ${data.username}`;
+                document.querySelector('p').innerText = data.bio;
+                document.body.style.backgroundImage = `url(${data.background_image})`;  // Set background
+            })
+            .catch(() => {
+                document.querySelector('h1').innerText = 'User not found';
+                document.querySelector('p').innerText = 'Please check the username.';
+            });
+    </script>
+</body>
+</html>
 
