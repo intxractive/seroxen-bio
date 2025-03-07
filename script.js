@@ -9,7 +9,6 @@ document.getElementById("signup-form").addEventListener("submit", async function
     return;
   }
 
-  // Sending the POST request to the Cloudflare Worker (assuming Worker is set up for signup)
   const response = await fetch("https://seroxen.us/signup", {
     method: "POST",
     headers: {
