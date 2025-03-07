@@ -1,58 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up for Bio</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Sign Up for Your Bio Page</h1>
-    <form id="signup-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        
-        <label for="bio">Bio:</label><br>
-        <textarea id="bio" name="bio" required></textarea><br><br>
+const express = require('express');
+const fs = require('fs');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-        <label for="background_image">Background Image URL:</label><br>
-        <input type="url" id="background_image" name="background_image"><br><br>
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-        <label for="audio">Audio URL (Optional):</label><br>
-        <input type="url" id="audio" name="audio"><br><br>
+let users = [];
 
-        <button type="submit">Sign Up</button>
-    </form>
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html'); // Your sign-up page HTML
+});
 
-    <script>
-        const form = document.getElementById('signup-form');
-        
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+app.post('/signup', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).send('Username and password are required.');
+  }
 
-            // Send data to GitHub Action (via an API or direct trigger)
-            fetch('https://api.github.com/repos/YOUR_USERNAME/seroxen-bio/actions/workflows/signup.yml/dispatches', {
-                method: 'POST',
-                body: JSON.stringify({
-                    event_type: 'user_signup',
-                    client_payload: data
-                }),
-                headers: {
-                    'Authorization': `Bearer YOUR_GITHUB_TOKEN`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(result => {
-                alert('Signup successful! Your bio page will be available soon.');
-            })
-            .catch(error => {
-                alert('Error: ' + error.message);
-            });
-        });
-    </script>
-</body>
-</html>
+  // Simple check for username duplication
+  if (users.find(user => user.username === username)) {
+    return res.status(400).send('Username already exists.');
+  }
+
+  // Save the user
+  users.push({ username, password });
+  fs.writeFileSync('users.json', JSON.stringify(users));
+
+  res.send('Sign-up successful! <a href="/login">Log in</a>');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
